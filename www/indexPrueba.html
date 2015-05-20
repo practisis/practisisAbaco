@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Web Application</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <script src="js/jquery.js"></script>
+        <!-- needs images, font... therefore can not be part of ui.css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+    </head>
+    <body id='contenedorGlobal'>
+<div class="container" >
+<div class="row">
+                    <div class="col-md-12" style="text-align: center; background-color:black;color:#fff; font-size: 20px; padding-bottom: 10px; padding-top: 5px;">
+                        <h3>Practisis Abaco</h3>
+                    </div>
+                    
+</div>
+<div class="row" style="padding-top: 10px;padding-bottom: 10px;" >
+	<div class="col-md-12"  style="text-align: center;">
+            <div class="panel panel-default">
+                    <div  class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-th"></span>
+                         Autentificación de Usuario
+                    </div>        
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <label class="input-group-addon">User:</label>
+                            <input type="text" id="nombredeusuario" class="form-control" />
+                        </div>
+                        <div style="height:10px;"></div>
+                        <div class="input-group">
+                        <label class="input-group-addon">Pass:</label>
+                        <input type="password" id="clave" class="form-control" />
+                        </div>
+                        <div style="height:10px;"></div>
+                        <button class="btn btn-default" id='btnvalida' type="button" onclick="enviaDatos();">Login</button>
+                    </div>
+            </div>
+                    <div id="mensaje"></div>
+        </div>
+</div>
+</div>
+		<script>
+		function enviaDatos(){
+			document.getElementById('btnvalida').innerHTML="<img src='images/loader.gif' width='20px'/>";
+			var usuario = $("#nombredeusuario").val();
+			var password = $("#clave").val();
+			$.post('https://www.practisis.net/mobileapilogin.php',{
+				usuario : usuario , password : password
+			}).done(function(data){
+				if($.trim(data)!='error'){
+					alert(data);
+					$('#contenedorGlobal').load('index3.html');
+					$('#formalocales').html(data);
+				}else if($.trim(data)=='error'){
+					alert(data);
+					$('#container').html('index.html');
+					$('#home').css('display','none');
+					window.location='http://lcodigo.com/dashboard/www/indexPrueba.html';
+				}
+			});
+		}                
+		</script>
+                
+    </body>
+</html>

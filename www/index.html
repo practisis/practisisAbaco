@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Web Application</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <script src="js/jquery.js"></script>
+        <!-- needs images, font... therefore can not be part of ui.css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+    </head>
+    <body>
+<div class="container" >
+<div class="row">
+                    <div class="col-md-12" style="text-align: center; background-color:black;color:#fff; font-size: 20px; padding-bottom: 10px; padding-top: 5px;">
+                        <h3>Practisis Abaco</h3>
+                    </div>
+                    
+</div>
+<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+	<div class="col-md-12"  style="text-align: center;">
+            <div class="panel panel-default">
+                    <div  class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-th"></span>
+                         Autentificación de Usuario
+                    </div>        
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <label class="input-group-addon">User:</label>
+                            <input type="text" id="user" class="form-control" />
+                        </div>
+                        <div style="height:10px;"></div>
+                        <div class="input-group">
+                        <label class="input-group-addon">Pass:</label>
+                        <input type="password" id="pass" class="form-control" />
+                        </div>
+                        <div style="height:10px;"></div>
+                        <button class="btn btn-default" id='btnvalida' type="button" onclick="valida();">Login</button>
+                    </div>
+            </div>
+                    <div id="mensaje"></div>
+        </div>
+</div>
+</div>
+<script>
+function valida(){
+document.getElementById('btnvalida').innerHTML="<img src='images/loader.gif' width='20px'/>";
+var quien=document.getElementById("user").value;
+var pass=document.getElementById("pass").value;
+var xmlhttp=false;
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') { try {xmlhttp = new XMLHttpRequest(); } catch (e) { xmlhttp=false;}}
+if (!xmlhttp && window.createRequest) {	try { xmlhttp = window.createRequest();} catch (e) { xmlhttp=false;}}
+xmlhttp.open("GET","https://www.practisis.net/loginAbaco.php?id="+quien+"&pass="+pass,true);
+xmlhttp.onreadystatechange=function() {
+if (xmlhttp.readyState==4){
+	if(xmlhttp.status==200){
+            var respuesta=xmlhttp.responseText;
+            console.log($.trim(respuesta));
+            if (respuesta.trim()!='error'){
+                location.href="index2.html?id="+quien+"&pass="+pass+"&emp="+$.trim(respuesta);
+				
+            }else{
+                document.getElementById("mensaje").innerHTML="Credenciales no autorizadas.";
+                document.getElementById("user").value="";
+                document.getElementById("pass").value="";
+            }
+
+}}} 
+xmlhttp.send(null);
+    
+}          
+                
+                </script>
+                
+    </body>
+</html>

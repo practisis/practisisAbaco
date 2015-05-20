@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Web Application</title>
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- <script src="js/jquery.js"></script>--->
+        <!-- needs images, font... therefore can not be part of ui.css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+		<link rel="stylesheet" href="css/main_formated.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<style>
+ .pelota{   
+    display: block;
+float: left;
+margin: 0px 10px 10px 0px;
+width: 65px;
+height: 65px;
+border-radius: 50%;
+line-height: 65px;
+vertical-align: middle;
+text-align: center; 
+font-size: 35px;
+ }   
+</style>
+</head>
+<body onload="datosiniciales();">
+<div class="container" >
+<div class="row">
+    <div class="col-md-12" style="text-align: center; background-color:black;color:#fff; font-size: 20px; padding-bottom: 10px; padding-top: 5px;">
+    <h3>Practisis Abaco</h3>
+    </div>               
+</div>
+<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div  class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-th"></span> 
+                        DATOS FILTRO
+                    </div>
+                    <div class="panel-body">
+                        <label>Establecimiento</label>
+                <select class="form-control" id="formalocales">
+
+                </select>
+                <br/>
+                <label>Fecha</label>
+                    <input id="lafecha" class="form-control" readonly />
+                <br/>
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-success" id='bntfiltrar' onclick="cargate();">Filtrar</button>
+                </div>
+                </div>
+                </div>
+            </div>	
+                  
+</div>
+
+
+
+ <div id="contenedordedatos" style="display:none;">       
+<div class="row">
+	    <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                <span style="background-color: #e94b3b; color:#fff;" class="pelota">
+                    <i class="fa fa-shopping-cart"></i>
+                </span>
+                <div style="text-align:right;">
+                    <p class="h4"><small>Ventas Mes US$:&nbsp;&nbsp;&nbsp;</small> <span id="campoventas">10,263</span></p>
+                </div>
+            </div>
+                </div>
+        </div>
+            
+             <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                <span style="background-color: #23ae89; color:#fff;" class="pelota">
+                    <i class="fa fa-credit-card"></i>
+                </span>
+                <div style="text-align:right;">
+                    <p class="h4"><small>Ticket Promedio US$:&nbsp;&nbsp;&nbsp;</small> <span id="campoticket"> 5,35</p>
+                </div>
+            </div>
+                </div>
+        </div>
+             
+                  <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                <span style="background-color: #ffb61c; color:#fff;" class="pelota">
+                    <i class="fa fa-users"></i>
+                </span>
+                <div style="text-align:right;">
+                    <p class="h4"><small>Transacciones Mes:&nbsp;&nbsp;&nbsp;</small> <span id="campotransacciones">78</span></p>
+                </div>
+            </div>
+                </div>
+        </div>
+   
+</div>    
+            
+        <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Ventas del Mes vs. Presupuesto</strong></div>
+                <div class="panel-body" data-ng-controller="morrisChartCtrl">
+                        <div id="chartventas"></div>
+                </div>
+            </section> 
+        </div>
+        </div>
+    <!---<div class="row">
+	<div class="col-md-12">
+		<section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Ventas por Horas Mes vs. Año Anterior</strong></div>
+                <div class="panel-body" data-ng-controller="morrisChartCtrl">
+                        <div id="charthoras"></div>
+                </div>
+            </section> 
+	</div>
+  </div>--->
+  
+    <div class="row">
+	
+	<div class="col-md-12">
+		<section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Ventas por día Mes vs. Presupuesto</strong></div>
+                <div class="panel-body" data-ng-controller="morrisChartCtrl">
+                        <div id="chartdias"></div>
+                </div>
+            </section>
+		<br/>
+		<br/>
+	</div>
+  </div>
+    </div>
+ 
+ <div id="contenedordealertas" style="display:block;">
+      <div class="row">
+	<div class="col-md-12" id="mensaje" style="text-align: center;">
+            Seleciona tus criterios y presiona "Filtrar"
+        </div>
+      </div>
+ </div>
+        
+            
+            
+            
+            
+        </div>
+
+
+		
+<script>                    
+
+
+
+
+ 
+                
+                </script>
+                
+    </body>
+</html>

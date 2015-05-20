@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Web Application</title>
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- <script src="js/jquery.js"></script>--->
+        <!-- needs images, font... therefore can not be part of ui.css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+		<link rel="stylesheet" href="css/main_formated.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<style>
+ .pelota{   
+    display: block;
+float: left;
+margin: 0px 10px 10px 0px;
+width: 65px;
+height: 65px;
+border-radius: 50%;
+line-height: 65px;
+vertical-align: middle;
+text-align: center; 
+font-size: 35px;
+ }   
+</style>
+</head>
+<body onload="datosiniciales();">
+<div class="container" >
+<div class="row">
+    <div class="col-md-12" style="text-align: center; background-color:black;color:#fff; font-size: 20px; padding-bottom: 10px; padding-top: 5px;">
+    <h3>Practisis Abaco</h3>
+    </div>               
+</div>
+<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div  class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-th"></span> 
+                        DATOS FILTRO
+                    </div>
+                    <div class="panel-body">
+                        <label>Establecimiento</label>
+                <select class="form-control" id="formalocales">
+
+                </select>
+                <br/>
+                <label>Fecha</label>
+                    <input id="lafecha" class="form-control" readonly />
+					<input type='hidden' id='id_emp' />
+                <br/>
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-success" id='bntfiltrar' onclick="inicia();">Filtrar</button>
+                </div>
+                </div>
+                </div>
+            </div>	
+                  
+</div>
+
+
+
+ <div id="contenedordedatos" style="display:none;">       
+<div class="row">
+	    <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                <span style="background-color: #e94b3b; color:#fff;" class="pelota">
+                    <i class="fa fa-shopping-cart"></i>
+                </span>
+                <div style="text-align:right;">
+                    <p class="h4"><small>Ventas Mes US$:&nbsp;&nbsp;&nbsp;</small> <span id="campoventas">10,263</span></p>
+					<p class="h4"><small>Ventas Dia US$:&nbsp;&nbsp;&nbsp;</small> <span id="campoventasDia">10,263</span></p>
+                </div>
+            </div>
+                </div>
+        </div>
+            
+             <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                <span style="background-color: #23ae89; color:#fff;" class="pelota">
+                    <i class="fa fa-credit-card"></i>
+                </span>
+                <div style="text-align:right;">
+                    <p class="h4"><small>Ticket Promedio US$:&nbsp;&nbsp;&nbsp;</small> <span id="campoticket"> 5,35</p>
+					<p class="h4"><small>Ticket Promedio Diario US$:&nbsp;&nbsp;&nbsp;</small> <span id="campoticketHoy"> 5,35</p>
+                </div>
+            </div>
+                </div>
+        </div>
+             
+                  <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                <span style="background-color: #ffb61c; color:#fff;" class="pelota">
+                    <i class="fa fa-users"></i>
+                </span>
+                <div style="text-align:right;">
+                    <p class="h4"><small>Transacciones Mes:&nbsp;&nbsp;&nbsp;</small> <span id="campotransacciones">78</span></p>
+					<p class="h4"><small>Transacciones Dia:&nbsp;&nbsp;&nbsp;</small> <span id="campotransaccionesDia">78</span></p>
+                </div>
+            </div>
+                </div>
+        </div>
+   
+</div>    
+            
+        <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Ventas del Mes vs. Presupuesto</strong></div>
+                <div class="panel-body" data-ng-controller="morrisChartCtrl">
+                        <div id="chartventas"></div>
+                </div>
+            </section> 
+        </div>
+        </div>
+    <!---<div class="row">
+	<div class="col-md-12">
+		<section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Ventas por Horas Mes vs. Año Anterior</strong></div>
+                <div class="panel-body" data-ng-controller="morrisChartCtrl">
+                        <div id="charthoras"></div>
+                </div>
+            </section> 
+	</div>
+  </div>--->
+  
+    <div class="row">
+	
+	<div class="col-md-12">
+		<section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Ventas por día Mes vs. Presupuesto</strong></div>
+                <div class="panel-body" data-ng-controller="morrisChartCtrl">
+                        <div id="chartdias"></div>
+                </div>
+            </section>
+		<br/>
+		<br/>
+	</div>
+  </div>
+    </div>
+ 
+ <div id="contenedordealertas" style="display:block;">
+      <div class="row">
+	<div class="col-md-12" id="mensaje" style="text-align: center;">
+            Seleciona tus criterios y presiona "Filtrar"
+        </div>
+      </div>
+ </div>
+        
+            
+            
+            
+            
+        </div>
+
+
+		
+<script>                    
+//var datosgraf1=JSON.parse("");
+$(window).ready(function(){
+	$('#lafecha').datepicker({
+		showAnim: 'slideDown',
+		showOtherMonths: true,
+		dateFormat: 'yy-mm-dd',
+		dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+		});
+	
+//limpio los canvas de elementos
+	document.getElementById("chartdias").innerHTML="";
+	document.getElementById("chartventas").innerHTML="";
+	//document.getElementById("charthoras").innerHTML="";
+        
+	//primero carga el user, pass y locales.--->
+	var elget=window.location.search.replace("?", "");
+	var parejas= elget.split("&");
+	var intermedio=parejas[0].split("=");
+	var usuario=intermedio[1];
+	//alert(usuario);
+	var intermedio2=parejas[1].split("=");
+	var password=intermedio2[1];
+	var intermedio3=parejas[2].split("=");
+	var empresa = $.trim(intermedio3[1]);
+	$('#id_emp').val(empresa);
+	//alert("user:"+usuario+" y pass:"+password+'y empresa:'+empresa);
+	//envia a servidor
+	//inicia(usuario+"|"+password);
+	//$.cookie(usuario);
+	//alert($.cookie(usuario));
+	
+	function set_cookie(nombre, valor, dias){
+		var fecha = new Date();
+		var parametro = nombre + "=" + valor;
+		//alert(parametro);
+		fecha.setTime(fecha.getTime() + (dias * 24 * 60 * 60 * 1000));
+		var UTC = fecha.toUTCString();
+		//alert(UTC);
+		document.cookie = parametro + "; expires=" + UTC + "; path= /";
+	}
+
+	function get_cookie(nombre){
+		var cookies = document.cookie;
+		var parametros = cookies.split(";");
+		for (x = 0; x < parametros.length; x++){
+			var parametro = parametros[x].split("=");
+			if (parametro[0].trim() == nombre){
+				var valor = parametro[0];
+				break;
+			}
+		}
+		return valor;
+	}
+
+
+	set_cookie(usuario , password , 3);
+	var pass = get_cookie(usuario);
+	alert(pass);
+	if (pass != null) {
+         //location.reload();
+     }else{
+		window.location.href='index.html';
+	 }
+
+	
+	$.post("https://www.practisis.net/mobileapilogin.php",{
+		usuario : usuario , password : password 
+	}).done(function(json){
+		var obj=jQuery.parseJSON(json);
+		var busqueda= obj.Search;
+		for(i=0; i<= (obj.locales.length -1); i++){
+			var id_e= obj.locales[i].id_e;
+			var emp= obj.locales[i].emp;
+			$('#formalocales').append('<option value='+id_e+'>'+emp+'</option>');
+		}
+			
+	});
+});
+ 
+function metegraficos(datos1, datos3, datos2){
+new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'chartventas',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: datos1,
+  // The name of the data record attribute that contains x-values.
+  xkey: 'x',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['ventas', 'presupuestos'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Ventas','Presupuesto'],
+  parseTime: false,
+  lineColors: ['#E94B3B','#082356'],
+  resize: true
+});
+
+/*new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'charthoras',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: datos2,
+  // The name of the data record attribute that contains x-values.
+  xkey: 'x',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['mes','mesant'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['ventas', 'ventas-1'],
+  parseTime: false,
+  lineColors: ['#E94B3B', '#082356'],
+  resize: true
+});*/
+new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'chartdias',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: datos3,
+  // The name of the data record attribute that contains x-values.
+  xkey: 'x',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['mes','mesant'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Ventas', 'Presupuesto'],
+  parseTime: false,
+  lineColors: ['#E94B3B', '#082356'],
+  resize: true
+});
+
+/*finaliza la espera*/
+document.getElementById("bntfiltrar").innerHTML="Filtrar";
+document.getElementById("bntfiltrar").className="btn btn-success";
+}        
+         
+function inicia(){
+// envia nuevo
+document.getElementById("contenedordealertas").style.display='block';
+document.getElementById("contenedordedatos").style.display='none';
+document.getElementById("mensaje").innerHTML="Cargando...espere por favor.<br><img src='images/loader.gif' width='30px'/>";
+document.getElementById("bntfiltrar").innerHTML="<img src='images/loader.gif' width='20px'/>";
+document.getElementById("bntfiltrar").className="btn btn-default";
+
+//coge la opcion del local
+var sel = document.getElementById("formalocales");
+var local= $('#formalocales').val();
+var emp = $('#id_emp').val();
+console.log(local);
+
+var xmlhttp=false;
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') { try {xmlhttp = new XMLHttpRequest(); } catch (e) { xmlhttp=false;}}
+if (!xmlhttp && window.createRequest) {	try { xmlhttp = window.createRequest();} catch (e) { xmlhttp=false;}}
+xmlhttp.open("GET","https://www.practisis.net/mobileapi.php?&date="+document.getElementById("lafecha").value+"&local="+local+"&emp="+emp,true);
+xmlhttp.onreadystatechange=function() {
+if (xmlhttp.readyState==4){
+	if(xmlhttp.status==200){	
+//recibe datos para graficos
+var respuesta=xmlhttp.responseText;
+var datos= respuesta.split("$");
+var primerosdatos=datos[0].split("|");
+document.getElementById("campoventas").innerHTML=primerosdatos[0];
+document.getElementById("campoticket").innerHTML=primerosdatos[2];
+document.getElementById("campotransacciones").innerHTML=primerosdatos[1];
+
+document.getElementById("campotransaccionesDia").innerHTML=primerosdatos[5];
+
+
+document.getElementById("campoventasDia").innerHTML=primerosdatos[3];
+document.getElementById("campoticketHoy").innerHTML=primerosdatos[4];
+document.getElementById("contenedordealertas").style.display='none';
+document.getElementById("contenedordedatos").style.display='block';
+var jsonaobjt=JSON.parse(datos[1]);
+var jsonaobjt3=JSON.parse(datos[2]);
+var jsonaobjt2=JSON.parse(datos[3]);
+metegraficos(jsonaobjt, jsonaobjt3,jsonaobjt2);
+
+}}} 
+xmlhttp.send(null);
+    
+}
+
+cargate();
+function cargate(){
+    
+}
+
+function datosiniciales(){
+    
+    var dt = new Date();
+    // Display the month, day, and year. getMonth() returns a 0-based number.
+    var month = dt.getMonth()+1;
+    var day = dt.getDate();
+    var year = dt.getFullYear();
+    var lafecha= year + '-' + month + '-' + day;
+    document.getElementById("lafecha").value=lafecha;
+    
+    //primero carga el user, pass y locales.
+	//var elget=window.location.search.replace("?", "");
+	//var parejas= elget.split("&");
+	//var intermedio=parejas[2].split("=");
+	//var locales=intermedio[1].split("@");
+	//console.log("son locales:"+locales.length);
+	
+    // ingresa locales en select
+    //for (i = 0; i < locales.length; i++) {
+	  //      var x = document.getElementById("formalocales");
+	//	var option = document.createElement("option");
+		//option.text = $.trim(locales[i]);
+		//x.add(option);
+    //}    
+}      
+                
+                </script>
+                
+    </body>
+</html>
