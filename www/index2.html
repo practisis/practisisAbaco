@@ -8,9 +8,7 @@
 		<script language="javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- <script src="js/jquery.js"></script>--->
-        <!-- needs images, font... therefore can not be part of ui.css -->
+        
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.css">
         <script type="text/javascript" src="cordova.js"></script>
@@ -125,16 +123,7 @@ font-size: 35px;
             </section> 
         </div>
         </div>
-    <!---<div class="row">
-	<div class="col-md-12">
-		<section class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Ventas por Horas Mes vs. Año Anterior</strong></div>
-                <div class="panel-body" data-ng-controller="morrisChartCtrl">
-                        <div id="charthoras"></div>
-                </div>
-            </section> 
-	</div>
-  </div>--->
+    
   
     <div class="row">
 	
@@ -168,7 +157,7 @@ font-size: 35px;
 
 		
 <script>                    
-//var datosgraf1=JSON.parse("");
+
 $(window).ready(function(){
 	$('#lafecha').datepicker({
 		showAnim: 'slideDown',
@@ -177,35 +166,29 @@ $(window).ready(function(){
 		dayNamesMin: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
 		});
 	
-//limpio los canvas de elementos
+
 	document.getElementById("chartdias").innerHTML="";
 	document.getElementById("chartventas").innerHTML="";
-	//document.getElementById("charthoras").innerHTML="";
-        
-	//primero carga el user, pass y locales.--->
+	
 	var elget=window.location.search.replace("?", "");
 	var parejas= elget.split("&");
 	var intermedio=parejas[0].split("=");
 	var usuario=intermedio[1];
-	//alert(usuario);
+	
 	var intermedio2=parejas[1].split("=");
 	var password=intermedio2[1];
 	var intermedio3=parejas[2].split("=");
 	var empresa = $.trim(intermedio3[1]);
 	$('#id_emp').val(empresa);
-	//alert("user:"+usuario+" y pass:"+password+'y empresa:'+empresa);
-	//envia a servidor
-	//inicia(usuario+"|"+password);
-	//$.cookie(usuario);
-	//alert($.cookie(usuario));
+	
 	
 	function set_cookie(nombre, valor, dias){
 		var fecha = new Date();
 		var parametro = nombre + "=" + valor;
-		//alert(parametro);
+		
 		fecha.setTime(fecha.getTime() + (dias * 24 * 60 * 60 * 1000));
 		var UTC = fecha.toUTCString();
-		//alert(UTC);
+		
 		document.cookie = parametro + "; expires=" + UTC + "; path= /";
 	}
 
@@ -227,7 +210,7 @@ $(window).ready(function(){
 	var pass = get_cookie(usuario);
 	alert(pass);
 	if (pass != null) {
-         //location.reload();
+         
      }else{
 		window.location.href='index.html';
 	 }
@@ -249,72 +232,52 @@ $(window).ready(function(){
  
 function metegraficos(datos1, datos3, datos2){
 new Morris.Line({
-  // ID of the element in which to draw the chart.
+  
   element: 'chartventas',
-  // Chart data records -- each entry in this array corresponds to a point on
-  // the chart.
+  
   data: datos1,
-  // The name of the data record attribute that contains x-values.
+  
   xkey: 'x',
-  // A list of names of data record attributes that contain y-values.
+  
   ykeys: ['ventas', 'presupuestos'],
-  // Labels for the ykeys -- will be displayed when you hover over the
-  // chart.
+ 
   labels: ['Ventas','Presupuesto'],
   parseTime: false,
   lineColors: ['#E94B3B','#082356'],
   resize: true
 });
 
-/*new Morris.Line({
-  // ID of the element in which to draw the chart.
-  element: 'charthoras',
-  // Chart data records -- each entry in this array corresponds to a point on
-  // the chart.
-  data: datos2,
-  // The name of the data record attribute that contains x-values.
-  xkey: 'x',
-  // A list of names of data record attributes that contain y-values.
-  ykeys: ['mes','mesant'],
-  // Labels for the ykeys -- will be displayed when you hover over the
-  // chart.
-  labels: ['ventas', 'ventas-1'],
-  parseTime: false,
-  lineColors: ['#E94B3B', '#082356'],
-  resize: true
-});*/
+
 new Morris.Line({
-  // ID of the element in which to draw the chart.
+  
   element: 'chartdias',
-  // Chart data records -- each entry in this array corresponds to a point on
-  // the chart.
+  
   data: datos3,
-  // The name of the data record attribute that contains x-values.
+ 
   xkey: 'x',
-  // A list of names of data record attributes that contain y-values.
+  
   ykeys: ['mes','mesant'],
-  // Labels for the ykeys -- will be displayed when you hover over the
-  // chart.
+  
   labels: ['Ventas', 'Presupuesto'],
   parseTime: false,
   lineColors: ['#E94B3B', '#082356'],
   resize: true
 });
 
-/*finaliza la espera*/
+
 document.getElementById("bntfiltrar").innerHTML="Filtrar";
 document.getElementById("bntfiltrar").className="btn btn-success";
 }        
          
 function inicia(){
-// envia nuevo
+
 document.getElementById("contenedordealertas").style.display='block';
 document.getElementById("contenedordedatos").style.display='none';
 document.getElementById("mensaje").innerHTML="Cargando...espere por favor.<br><img src='images/loader.gif' width='30px'/>";
 document.getElementById("bntfiltrar").innerHTML="<img src='images/loader.gif' width='20px'/>";
 document.getElementById("bntfiltrar").className="btn btn-default";
 
-//coge la opcion del local
+
 var sel = document.getElementById("formalocales");
 var local= $('#formalocales').val();
 var emp = $('#id_emp').val();
@@ -327,7 +290,6 @@ xmlhttp.open("GET","https://www.practisis.net/mobileapi.php?&date="+document.get
 xmlhttp.onreadystatechange=function() {
 if (xmlhttp.readyState==4){
 	if(xmlhttp.status==200){	
-//recibe datos para graficos
 var respuesta=xmlhttp.responseText;
 var datos= respuesta.split("$");
 var primerosdatos=datos[0].split("|");
@@ -360,27 +322,13 @@ function cargate(){
 function datosiniciales(){
     
     var dt = new Date();
-    // Display the month, day, and year. getMonth() returns a 0-based number.
+    
     var month = dt.getMonth()+1;
     var day = dt.getDate();
     var year = dt.getFullYear();
     var lafecha= year + '-' + month + '-' + day;
     document.getElementById("lafecha").value=lafecha;
     
-    //primero carga el user, pass y locales.
-	//var elget=window.location.search.replace("?", "");
-	//var parejas= elget.split("&");
-	//var intermedio=parejas[2].split("=");
-	//var locales=intermedio[1].split("@");
-	//console.log("son locales:"+locales.length);
-	
-    // ingresa locales en select
-    //for (i = 0; i < locales.length; i++) {
-	  //      var x = document.getElementById("formalocales");
-	//	var option = document.createElement("option");
-		//option.text = $.trim(locales[i]);
-		//x.add(option);
-    //}    
 }      
                 
                 </script>
