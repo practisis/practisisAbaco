@@ -213,15 +213,12 @@ $(window).ready(function(){
 	
 	$.post("https://www.practisis.net/mobileapilogin.php",{
 		usuario : usuario , password : password 
-	}).done(function(json){
-		var obj=jQuery.parseJSON(json);
-		var busqueda= obj.Search;
-		for(i=0; i<= (obj.locales.length -1); i++){
-			var id_e= obj.locales[i].id_e;
-			var emp= obj.locales[i].emp;
-			$('#formalocales').append('<option value='+id_e+'>'+emp+'</option>');
-		}
+	}).done(function(data){
+		if(data == 'error' ){
 			
+		}else{
+			$('#formalocales').html(data);
+		}
 	});
 });
  
