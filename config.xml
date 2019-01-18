@@ -13,7 +13,7 @@
     <allow-navigation href="*" />
     <allow-intent href="*" />
     <preference name="permissions" value="none" />
-    <preference name="phonegap-version" value="3.5.0" />
+    <preference name='phonegap-version' value='cli-6.5.0' />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
@@ -28,7 +28,7 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="16" />
     <preference name="android-targetSdkVersion" value="26" />
-    <preference name="android-installLocation" value="auto" />
+<preference name="android-installLocation" value="auto" />
 
     <icon src="icon.png" />
     <icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
