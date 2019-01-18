@@ -11,10 +11,10 @@
         <!-- needs images, font... therefore can not be part of ui.css -->
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.css">
-        <script type="text/javascript" src="cordova.js"></script>
+        
         <script type="text/javascript" src="js/bootstrap.js"></script>
     </head>
-    <body onload = "alert('hola')" >
+    <body>
 <div class="container" >
 <div class="row">
                     <div class="col-md-12" style="text-align: center; background-color:black;color:#fff; font-size: 20px; padding-bottom: 10px; padding-top: 5px;">
@@ -31,13 +31,13 @@
                     </div>        
                     <div class="panel-body">
                         <div class="input-group">
-                            <label class="input-group-addon">User:</label>
-                            <input type="text" id="user" class="form-control" />
+                            <label class="input-group-addon">Usuario : </label>
+                            <input type="text" id="user" class="form-control" placeholder = 'Ingrese su usuario' />
                         </div>
                         <div style="height:10px;"></div>
                         <div class="input-group">
-                        <label class="input-group-addon">Pass:</label>
-                        <input type="password" id="pass" class="form-control" />
+                        <label class="input-group-addon">Password : </label>
+                        <input type="password" id="pass" class="form-control" placeholder = 'Ingrese su password' />
                         </div>
                         <div style="height:10px;"></div>
                         <button class="btn btn-default" id='btnvalida' type="button" onclick="valida();">Login</button>
