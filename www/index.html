@@ -11,7 +11,7 @@
         <!-- needs images, font... therefore can not be part of ui.css -->
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.css">
-        
+        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
     </head>
     <body>
@@ -31,13 +31,13 @@
                     </div>        
                     <div class="panel-body">
                         <div class="input-group">
-                            <label class="input-group-addon">Usuario : </label>
-                            <input type="text" id="user" class="form-control" placeholder = 'Ingrese su usuario' />
+                            <label class="input-group-addon">User:</label>
+                            <input type="text" id="user" class="form-control" />
                         </div>
                         <div style="height:10px;"></div>
                         <div class="input-group">
-                        <label class="input-group-addon">Password : </label>
-                        <input type="password" id="pass" class="form-control" placeholder = 'Ingrese su password' />
+                        <label class="input-group-addon">Pass:</label>
+                        <input type="password" id="pass" class="form-control" />
                         </div>
                         <div style="height:10px;"></div>
                         <button class="btn btn-default" id='btnvalida' type="button" onclick="valida();">Login</button>
@@ -47,8 +47,23 @@
         </div>
 </div>
 </div>
-		<script>
-			function valida(){
+<script>
+
+         $(window).ready(function(){
+		//localStorage.clear();
+		var username = localStorage.getItem('username');
+		var password = localStorage.getItem('password');
+		var empresa = localStorage.getItem('empresa');
+		
+		//alert(username);
+		if(username === null){
+			//window.location.href='index.html';
+		}else{
+			window.location.href="index2.html?id="+username+"&pass="+password+"&emp="+empresa;
+		}
+          });		
+
+           function valida(){
 				var id = $('#user').val();
 				var pass = $('#pass').val();
 				
@@ -78,8 +93,10 @@
 					});
 				}
 				
-			}          
-        </script>
+			}    
+
+
+                </script>
                 
     </body>
 </html>
